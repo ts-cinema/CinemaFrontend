@@ -6,11 +6,14 @@ import reportWebVitals from './reportWebVitals';
 import './index.css';
 import { ToastContainer } from 'react-toastify';
 import { BrowserRouter, Route, Routes } from 'react-router-dom';
+import Homepage from './components/home/Homepage';
+import Layout from './components/layout/Layout';
+import Register from './components/register/Register';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
 
-const Login = React.lazy(() => import('./components/Login'));
+const Login = React.lazy(() => import('./components/login/Login'));
 
 root.render(
   <React.StrictMode>
@@ -19,7 +22,11 @@ root.render(
                 <React.Suspense>
                     <ToastContainer />
                     <Routes>
+                      <Route path="/" element={<Layout />}>
                         <Route path={'/login'} element={ <Login />} />
+                        <Route path={'/home'} element={ <Homepage />} />
+                        <Route path={'/register'} element={ <Register />} />
+                      </Route>
                     </Routes>
                 </React.Suspense>
             </BrowserRouter>

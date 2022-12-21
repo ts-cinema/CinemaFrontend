@@ -4,6 +4,8 @@ import { FiLogIn } from 'react-icons/fi';
 
 import './Login.css';
 
+import backgroundImg from '../../assets/images/cinema.jpg';
+
 const Login = () => {
 
     const [user, setUser] = useState({
@@ -49,7 +51,7 @@ const Login = () => {
                     </Button>
                 </div>
                 <div className="login-background">
-                    <img className="background-image" alt="Background image" />
+                    <img className="background-image" src={backgroundImg} alt="Background image" />
                 </div>
             </div>
         </div>
