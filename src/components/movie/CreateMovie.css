@@ -1,0 +1,53 @@
+.btnBox {
+    width: 100%;
+    display: flex;
+    justify-content: space-around;
+    margin-top: 2em;
+}
+
+.btn {
+    border: 2px solid transparent;
+    border-radius: 2em;
+    background-image: linear-gradient(#fff, #fff), radial-gradient(circle at bottom right, orange, green);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    margin-bottom: 1em;
+}
+.catAccount {
+    display: inline-block;
+    font-size: 1.2rem;
+    text-decoration: none;
+    padding: .5em 1.5em;
+    color: chocolate;
+}
+
+.formInputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonSubmit {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+}
+
+.moviesButton {
+    border: 2px solid transparent;
+    border-radius: 2em;
+    background-image: linear-gradient(#fff, #fff), radial-gradient(circle at bottom right, orange, green);
+    background-origin: border-box;
+    background-clip: content-box, border-box;
+    margin-bottom: 1em;
+}
+
+h1 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}

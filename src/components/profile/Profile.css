@@ -1,0 +1,23 @@
+
+h1 {
+    padding-top: 30px;
+    padding-bottom: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+
+}
+
+.formInputs {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.buttonSubmit {
+    padding-top: 30px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 2em;
+}

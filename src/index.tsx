@@ -9,6 +9,11 @@ import { BrowserRouter, Route, Routes } from 'react-router-dom';
 import Homepage from './components/home/Homepage';
 import Layout from './components/layout/Layout';
 import Register from './components/register/Register';
+import CreateMovie from './components/movie/CreateMovie';
+import Movies from './components/movie/Movies';
+import EditMovie from './components/movie/EditMovie';
+import Profile from './components/profile/Profile';
+import EditProfile from './components/profile/EditProfile';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -26,6 +31,11 @@ root.render(
                         <Route path={'/login'} element={ <Login />} />
                         <Route path={'/home'} element={ <Homepage />} />
                         <Route path={'/register'} element={ <Register />} />
+                        <Route path={'/movie/create'} element={ <CreateMovie />} />
+                        <Route path={'/movie/edit'} element={ <EditMovie />} />
+                        <Route path={'/movies'} element={ <Movies />} />
+                        <Route path={'/profile'} element={ <Profile />} />
+                        <Route path={'/profile/edit'} element={ <EditProfile />} />
                       </Route>
                     </Routes>
                 </React.Suspense>
