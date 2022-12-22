@@ -1,12 +1,19 @@
 import React, { useState } from 'react';
 import { TextField, Button } from '@mui/material';
 import { FiLogIn } from 'react-icons/fi';
+import { useNavigate, useLocation } from 'react-router-dom';
+import jwt_decode from 'jwt-decode';
 
 import './Login.css';
 
 import backgroundImg from '../../assets/images/cinema.jpg';
+import { login } from '../../api/Auth';
 
 const Login = () => {
+
+    const navigate = useNavigate();
+    const location = useLocation();
+    const from = location.state?.from?.pathname || '/';
 
     const [user, setUser] = useState({
         email: '',
@@ -17,13 +24,32 @@ const Login = () => {
         e.preventDefault();
         setUser({ ...user, [e.target.name]: e.target.value });
     };
+
+    const onSignInHandler = async (e: any) => {
+        e.preventDefault();
+        login(user)
+            .then((response) => {
+                console.log("Response: " + response.data.accessToken);
+                if (response.data.accessToken) {
+                    const accessToken = response.data.accessToken;
+                    const decoded: any = jwt_decode(accessToken);
+                    const role = decoded?.role || '';
+                    const user = decoded?.user_identifier || '';
+                    localStorage.setItem('token', JSON.stringify(response.data.accessToken));
+                    localStorage.setItem('user', user);
+                    localStorage.setItem('role', role);
+                    navigate(from, { replace: true });
+                }
+            })
+            .catch((err) => console.log(err));
+    };
     
     return (
         <div>
             <div className="login-container">
                 <div className="login-form">
-                    <p className="login-title">Sign in</p>
-                    <p className="login-text">Sign in to access your account</p>
+                    <p className="login-title">Log in</p>
+                    <p className="login-text">Log in to access your account</p>
                     <TextField
                         className="input-field"
                         id="outlined-basic"
@@ -45,9 +71,10 @@ const Login = () => {
                     <Button
                         className="sign-in-button"
                         variant="contained"
+                        onClick={onSignInHandler}
                         startIcon={<FiLogIn />}
                     >
-                        Sign in
+                        Log in
                     </Button>
                 </div>
                 <div className="login-background">

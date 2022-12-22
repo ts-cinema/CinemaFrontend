@@ -32,6 +32,12 @@
     margin-left: 25% !important;
 }
 
+.picker {
+    width: 50%;
+    margin-bottom: 20px !important;
+    margin-left: 25% !important;
+}
+
 .signup-text,
 .signup-title {
     margin-block-start: 2px !important;
