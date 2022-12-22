@@ -3,6 +3,7 @@ import { TextField, Button } from '@mui/material';
 import { FiLogIn } from 'react-icons/fi';
 import { useNavigate, useLocation } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
+import { cookieService } from '../../CookieService';
 
 import './Login.css';
 
@@ -29,15 +30,9 @@ const Login = () => {
         e.preventDefault();
         login(user)
             .then((response) => {
-                console.log("Response: " + response.data.accessToken);
                 if (response.data.accessToken) {
                     const accessToken = response.data.accessToken;
-                    const decoded: any = jwt_decode(accessToken);
-                    const role = decoded?.role || '';
-                    const user = decoded?.user_identifier || '';
-                    localStorage.setItem('token', JSON.stringify(response.data.accessToken));
-                    localStorage.setItem('user', user);
-                    localStorage.setItem('role', role);
+                    cookieService.setCookie(JSON.stringify({ token: accessToken }), 30);
                     navigate(from, { replace: true });
                 }
             })

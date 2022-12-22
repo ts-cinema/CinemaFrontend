@@ -27,7 +27,7 @@ p {
 }
 
 button,
-.btn {
+.btn-nav {
     font-family: inherit;
 }
 
@@ -84,7 +84,7 @@ nav a:hover {
     color: #121212;
 }
 
-nav .btn {
+nav .btn-nav {
     padding: 0.5rem 1rem;
     margin: 0 0 0 0.5rem;
     border: 1px solid #0064d0;

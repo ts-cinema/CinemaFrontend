@@ -39,8 +39,7 @@ const Register = () => {
 
     const onSignUpHandler = async (e: any) => {
         e.preventDefault();
-        console.log("Value " + date)
-        newUser.birth_date = date;
+        newUser.birth_date = new Date(date);
 
         signUp(newUser)
             .then(response => {
