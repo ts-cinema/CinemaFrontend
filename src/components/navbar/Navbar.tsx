@@ -36,6 +36,7 @@ const Navbar = () => {
                     {cookieService.getCookie() != null && cookieService.isRegisteredUser(cookieService.getCookie().token) 
                          && <Link to="/reservation">Reservation</Link>}
                     <Link to="/movies">Movies</Link>
+                    <Link to="/movies2">MovieItem</Link>
                     <Link to="/profile">
                         <IconButton ><PersonIcon /></IconButton>
                     </Link>

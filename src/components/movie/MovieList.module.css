@@ -1,0 +1,46 @@
+.container {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+  }
+  
+  .movies {
+    margin-top: 1.5rem;
+    max-width: 80%;
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(30rem, 1fr));
+    gap: 1.5rem;
+  }
+  
+  .loadButton {
+    font-size: 20px;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 10px 10px;
+    cursor: pointer;
+    color: whitesmoke;
+    transition: all ease-in-out 0.1s;
+    border-bottom: 2px solid rgba(235, 0, 40, 1);
+    width: 10rem;
+    background-color: #2a2a2a;
+    border-radius: 14px;
+    margin-top: 0.25rem;
+    margin-bottom: 2rem;
+  }
+  
+  .loadButton:hover {
+    background-color: rgba(235, 0, 40, 0.7);
+  }
+  
+  ul {
+    list-style: none;
+  }
+  
+  @media screen and (max-width: 640px) {
+    .movies {
+      max-width: fit-content;
+      margin: auto;
+    }
+  }  

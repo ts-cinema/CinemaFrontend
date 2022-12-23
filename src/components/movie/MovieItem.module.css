@@ -1,0 +1,64 @@
+.movie {
+    display: flex;
+    align-items: flex-start;
+    margin: 0.5rem;
+    height: fit-content;
+  }
+  
+  .coverPhoto {
+    display: flex;
+    justify-content: center;
+    width: 10rem;
+    height: auto;
+    box-shadow: rgba(133, 133, 133, 0.25) 0px 0.0625em 0.0625em,
+      rgba(211, 211, 211, 0.25) 0px 0.125em 0.5em,
+      rgba(255, 255, 255, 0.1) 0px 0px 0px 1px inset;
+  }
+  
+  .spanContent {
+    margin-right: 1rem;
+    margin-bottom: 1rem;
+  }
+  
+  .scrollableInfo {
+    overflow: -moz-hidden-unscrollable;
+  }
+  
+  .spanImage {
+    display: flex;
+    align-items: baseline;
+  }
+  
+  .rating {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+  
+  .controls {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin-top: 0.5rem;
+    margin-right: 1rem;
+  }
+  
+  .numberRating {
+    font-size: 22px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  h3 {
+    margin-top: 0;
+    padding-bottom: 5px;
+    border-bottom: 2px solid #eb0028;
+  }
+  
+  @media screen and (max-width: 640px) {
+    .movie {
+      width: 24rem;
+    }
+  }  

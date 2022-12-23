@@ -15,6 +15,9 @@ import EditMovie from './components/movie/EditMovie';
 import Profile from './components/profile/Profile';
 import EditProfile from './components/profile/EditProfile';
 import Reservation from './components/reservation/Reservation';
+import MovieItem from './components/movie/MovieItem';
+import MovieList from './components/movie/MovieList';
+import MoviesData from './components/movie/MoviesData';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -36,6 +39,7 @@ root.render(
                         <Route path={'/movie/create'} element={ <CreateMovie />} />
                         <Route path={'/movie/edit'} element={ <EditMovie />} />
                         <Route path={'/movies'} element={ <Movies />} />
+                        <Route path={'/movies2'} element={ <MoviesData />} />
                         <Route path={'/profile'} element={ <Profile />} />
                         <Route path={'/profile/edit'} element={ <EditProfile />} />
                       </Route>

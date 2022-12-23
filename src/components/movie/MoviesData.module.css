@@ -1,0 +1,40 @@
+.tabs {
+    font-family: arial;
+    margin: 0 auto;
+    width: 20rem;
+    text-align: center;
+    margin-top: 2rem;
+    border-radius: 14px;
+    border-bottom: 2px solid #eb0028;
+    color: whitesmoke;
+  }
+  
+  .tabButton {
+    font-size: 23px;
+    background: transparent;
+    border: none;
+    outline: none;
+    padding: 10px 20px;
+    width: 10rem;
+    cursor: pointer;
+    color: whitesmoke;
+    transition: all ease-in-out 0.1s;
+    border-bottom: 2px solid transparent;
+  }
+  
+  .tabButton:first-of-type {
+    border-radius: 14px 0 0 14px;
+  }
+  
+  .tabButton:nth-of-type(2) {
+    border-radius: 0 14px 14px 0;
+  }
+  
+  .active {
+    background-color: rgba(235, 0, 40, 1);
+  }
+  
+  .toggleHover:hover {
+    background-color: #2a2a2a;
+  }
+  
