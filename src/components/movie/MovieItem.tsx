@@ -125,6 +125,10 @@ const MovieItem = (props: any) => {
             <b>Release date:</b>{" "}
             {props.movie.release_date.substring(0,10)}
           </p>
+          <p>
+            <b>Genre:</b>{" "}
+            {props.movie.genre}
+          </p>
         </span>
       </div>
     </Fragment>

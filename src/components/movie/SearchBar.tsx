@@ -5,17 +5,18 @@ import { useDispatch, useSelector } from "react-redux";
 import classes from "./SearchBar.module.css";
 
 const SearchBar = (props: any) => {
-  const searchContent = useSelector((state: any) => state.movie.searchContent);
+  // const searchContent = useSelector((state: any) => state.movie.searchContent);
   const dispatch = useDispatch();
 
   useEffect(() => {
-    let timer = setTimeout(() => {
+    /*let timer = setTimeout(() => {
     }, 650);
     return () => {
       clearTimeout(timer);
-    };
-  }, [searchContent, dispatch]);
-
+    }; */
+  },);
+// [searchContent, dispatch]
+// vaulue = searchContent
   const handleSearchInput = (event: any) => {
     // dispatch(movieActions.setSearchContent(event.target.value));
   };
@@ -27,8 +28,7 @@ const SearchBar = (props: any) => {
           className={classes.searchQueryInput}
           type="text"
           name="searchQueryInput"
-          placeholder="Search favorite Movies and TV Shows"
-          value={searchContent}
+          placeholder="Search favorite movies"
           onChange={handleSearchInput}
         />
         <button
