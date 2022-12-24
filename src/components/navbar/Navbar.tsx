@@ -32,22 +32,35 @@ const Navbar = () => {
             </p>
             <ul>
                 <li>
-                    {cookieService.getCookie() != null && cookieService.isRegisteredUser(cookieService.getCookie().token) 
-                         && <Link to="/reservation">Reservation</Link>}
                     <Link to="/movies">Movies</Link>
-                    <Link to="/profile">
-                        <IconButton ><PersonIcon /></IconButton>
-                    </Link>
+                    
                     {!cookieService.getCookie() && (
                         <button className="btn-nav register" onClick={registerUser}>
                             Register
                         </button>
                     )}
+
+                    {cookieService.getCookie() != null && cookieService.isAdminUser(cookieService.getCookie().token) 
+                         && <Link to="/users/table">User List</Link>}
+
+                    {cookieService.getCookie() != null && cookieService.isAdminUser(cookieService.getCookie().token) 
+                         && <Link to="/movies/table">Movie List</Link>}
+
+                    {cookieService.getCookie() != null && cookieService.isAdminUser(cookieService.getCookie().token) 
+                         && <Link to="/projections/table">Projection List</Link>}
+
                     {!cookieService.getCookie() && (
                         <button className="btn-nav login" onClick={loginUser}>
                             Log In
                         </button>
                     )}
+
+                    {cookieService.getCookie() != null && cookieService.getCookie().token && (
+                        <Link to="/profile">
+                        <IconButton ><PersonIcon /></IconButton>
+                    </Link>
+                    )}
+
                     {cookieService.getCookie() != null && cookieService.getCookie().token && (
                         <button className="btn-nav logout" onClick={logoutUser}>
                             Log Out

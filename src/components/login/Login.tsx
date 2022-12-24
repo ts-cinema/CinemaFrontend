@@ -4,6 +4,7 @@ import { FiLogIn } from 'react-icons/fi';
 import { useNavigate, useLocation } from 'react-router-dom';
 import jwt_decode from 'jwt-decode';
 import { cookieService } from '../../CookieService';
+import Swal from "sweetalert2";
 
 import './Login.css';
 
@@ -36,7 +37,19 @@ const Login = () => {
                     navigate(from, { replace: true });
                 }
             })
-            .catch((err) => console.log(err));
+            .catch((err: any) => {
+                const swalText = `<div style='color:whitesmoke'>You are unable to perform this action!</div>`;
+                Swal.fire({
+                    title: `<div style='color:whitesmoke'>An error occured!</div>`,
+                    html: swalText,
+                    icon: "error",
+                    backdrop: true,
+                    showConfirmButton: true,
+                    confirmButtonColor: "#eb0028",
+                    focusConfirm: false,
+                    background: "#2C2C2C",
+                });
+            });
     };
     
     return (

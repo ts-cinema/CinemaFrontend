@@ -68,8 +68,7 @@ const AddMovieTable = () => {
             description: newMovie.description,
             genre: newMovie.genre,
             release_date: new Date(date),
-            cover_url: newMovie.coverUrl,
-            rating: 5.0
+            cover_url: newMovie.coverUrl
         };
 
         await interceptionAxios.post(`api/v1/cinema/movies`, addedMovie, config).then((res: any) => {
@@ -86,7 +85,7 @@ const AddMovieTable = () => {
           });
       }).catch((error: any) => {
         if (error?.response?.code !== 201) {
-          const swalText = `<div style='color:whitesmoke'>You don't have permissions to perform this action!</div>`;
+          const swalText = `<div style='color:whitesmoke'>You are unable to perform this action!</div>`;
           Swal.fire({
               title: `<div style='color:whitesmoke'>An error occured!</div>`,
               html: swalText,

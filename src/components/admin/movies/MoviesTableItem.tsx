@@ -50,7 +50,7 @@ const MoviesTableItem = ({ moviesTableItem } : any) => {
             });
         }).catch((error: any) => {
             if (error?.response?.code !== 201) {
-            const swalText = `<div style='color:whitesmoke'>You don't have permissions to perform this action!</div>`;
+            const swalText = `<div style='color:whitesmoke'>You are unable to perform this action!</div>`;
             Swal.fire({
                 title: `<div style='color:whitesmoke'>An error occured!</div>`,
                 html: swalText,

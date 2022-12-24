@@ -9,6 +9,7 @@ import { Dayjs } from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DatePicker } from '@mui/x-date-pickers/DatePicker';
+import Swal from "sweetalert2";
 
 import backgroundImg from '../../assets/images/cinema.jpg';
 import { signUp } from '../../api/Auth';
@@ -51,7 +52,19 @@ const Register = () => {
                     }, 3000);
                 }
             })
-            .catch(err => console.log(err))
+            .catch((err: any) => {
+                const swalText = `<div style='color:whitesmoke'>You are unable to perform this action!</div>`;
+                Swal.fire({
+                    title: `<div style='color:whitesmoke'>An error occured!</div>`,
+                    html: swalText,
+                    icon: "error",
+                    backdrop: true,
+                    showConfirmButton: true,
+                    confirmButtonColor: "#eb0028",
+                    focusConfirm: false,
+                    background: "#2C2C2C",
+                });
+            });
     };
 
     const setBirthDate = (birthDate: any) => {

@@ -14,7 +14,7 @@ import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
 import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
 
-const AddMovieProjection = () => {
+const EditMovieProjection = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -25,8 +25,8 @@ const AddMovieProjection = () => {
 
   const initialItemState = {
       start_time: new Date(),
-      total_seats: '',
-      available_seats: '',
+      total_seats: location.state.totalSeats,
+      available_seats: location.state.availableSeats,
       movie_id: ''
   };
 
@@ -51,7 +51,7 @@ const AddMovieProjection = () => {
   };
 
 
-  const addProjection = async () => {
+  const editProjection = async () => {
     const accessToken = cookieService.getCookie()?.token;
     if (accessToken == null) {
       const swalText = `<div style='color:whitesmoke'>You don't have permissions to perform this action!</div>`;
@@ -73,15 +73,18 @@ const AddMovieProjection = () => {
           headers: { "Authorization": `Bearer ${accessToken}` }
         };
 
-        const addedProjection = {
+        const modifiedProjection = {
+            id: location.state.projectionId,
             start_time: new Date(date), 
             total_seats: newProjection.total_seats,
-            available_seats: newProjection.total_seats,
-            movie_id: newProjection.movie_id
+            available_seats: newProjection.available_seats,
+            movie_id: location.state.movieId
         };
 
-        await interceptionAxios.post(`api/v1/cinema/movieprojections`, addedProjection, config).then((res: any) => {
-          const swalText = `<div style='color:whitesmoke'>You have successfully added projection!</div>`;
+        console.log("Id " + location.state.projectionId);
+
+        await interceptionAxios.put(`api/v1/cinema/movieprojections/${location.state.projectionId}`, modifiedProjection, config).then((res: any) => {
+          const swalText = `<div style='color:whitesmoke'>You have successfully edited projection!</div>`;
           Swal.fire({
               title: `<div style='color:whitesmoke'>Success!</div>`,
               html: swalText,
@@ -129,25 +132,8 @@ const AddMovieProjection = () => {
       <div>
           <div className="add-equipment-container" style={{ marginTop: '5%' }}>
               <div className="add-equipment-form">
-                  <p className="signup-title">Add new movie projection</p>
-                  <p className="signup-text">Enter projection's information</p>
-                  <FormControl className="select-form">
-                      <InputLabel id="label">Select movie</InputLabel>
-                      <Select
-                          id="outlined-basic"
-                          label="Movie"
-                          variant="outlined"
-                          name="movie_id"
-                          value={newProjection.movie_id}
-                          onChange={onChangeHandler}
-                      >
-                        {movies.map((movie: any) => (
-                          <MenuItem value={movie.id.toString()}>
-                            {movie.title}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                  </FormControl>
+                  <p className="signup-title">Edit movie projection</p>
+                  <p className="signup-text">Edit projection's information</p>
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
                         <DateTimePicker
                             className="picker"
@@ -164,7 +150,7 @@ const AddMovieProjection = () => {
                     <TextField
                         className="input-field"
                         id="outlined-basic"
-                        label="Number of seats"
+                        label="Total number of seats"
                         variant="outlined"
                         name="total_seats"
                         type="number"
@@ -172,11 +158,25 @@ const AddMovieProjection = () => {
                         onChange={onChangeHandler}
                         InputProps={{
                             startAdornment: <InputAdornment position="start"></InputAdornment>,
-                            inputProps: { min: 0, max: 50 },
+                            inputProps: { min: newProjection.available_seats, max: 50 },
                         }}
                     />
-                  <Button className="equipment-button" variant="contained" onClick={addProjection}>
-                      Add
+                    <TextField
+                        className="input-field"
+                        id="outlined-basic"
+                        label="Number of available seats"
+                        variant="outlined"
+                        name="available_seats"
+                        type="number"
+                        value={newProjection.available_seats}
+                        onChange={onChangeHandler}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start"></InputAdornment>,
+                            inputProps: { min: 0, max: newProjection.total_seats },
+                        }}
+                    />
+                  <Button className="equipment-button" variant="contained" onClick={editProjection}>
+                      Save
                   </Button>
               </div>
               <div className="equipment-background">
@@ -187,4 +187,4 @@ const AddMovieProjection = () => {
   );
 }
 
-export default AddMovieProjection;
+export default EditMovieProjection;

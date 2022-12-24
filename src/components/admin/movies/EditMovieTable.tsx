@@ -7,14 +7,14 @@ import backgroundImg from '../../../assets/images/cinema.jpg';
 import { useLocation } from 'react-router-dom';
 import {cookieService} from "../../../CookieService"
 import jwt_decode from 'jwt-decode';
-import './../movies/EditMovieTable.css';
+import './EditMovieTable.css';
 import Swal from 'sweetalert2';
 import { Dayjs } from 'dayjs';
 import { AdapterDayjs } from '@mui/x-date-pickers/AdapterDayjs';
 import { LocalizationProvider } from '@mui/x-date-pickers/LocalizationProvider';
-import { DateTimePicker } from '@mui/x-date-pickers/DateTimePicker';
+import { DatePicker } from '@mui/x-date-pickers/DatePicker';
 
-const AddMovieProjection = () => {
+const EditMovieTable = () => {
   const navigate = useNavigate();
   const location = useLocation();
 
@@ -24,34 +24,24 @@ const AddMovieProjection = () => {
   }; */
 
   const initialItemState = {
-      start_time: new Date(),
-      total_seats: '',
-      available_seats: '',
-      movie_id: ''
+      title: location.state.title,
+      description: location.state.description,
+      genre: location.state.genre,
+      releaseDate: new Date(),
+      coverUrl: location.state.coverUrl
   };
 
-  const [newProjection, setNewProjection] = useState(initialItemState);
-  const [movies, setMovies] = useState([]);
+  const [newMovie, setNewMovie] = useState(initialItemState);
 
   const [date, setDate] = useState(new Date());
   const [value, setValue] = React.useState<Dayjs | null>(null);
 
-  const setProjectionDate = (projectionDate: any) => {
-    setDate(projectionDate);
-  };
-
-  const getMovies = async () => {
-
-    await interceptionAxios.get(`api/v1/cinema/movies`).then((res: any) => {
-      setMovies(res.data);
-    });
-    return () => {
-        //
-    };
+  const setReleaseDate = (releaseDate: any) => {
+    setDate(releaseDate);
   };
 
 
-  const addProjection = async () => {
+  const editMovie = async () => {
     const accessToken = cookieService.getCookie()?.token;
     if (accessToken == null) {
       const swalText = `<div style='color:whitesmoke'>You don't have permissions to perform this action!</div>`;
@@ -73,15 +63,17 @@ const AddMovieProjection = () => {
           headers: { "Authorization": `Bearer ${accessToken}` }
         };
 
-        const addedProjection = {
-            start_time: new Date(date), 
-            total_seats: newProjection.total_seats,
-            available_seats: newProjection.total_seats,
-            movie_id: newProjection.movie_id
+        const editedMovie = {
+            id: location.state.movieId,
+            title: newMovie.title, 
+            description: newMovie.description,
+            genre: newMovie.genre,
+            release_date: location.state.releaseDate,
+            cover_url: newMovie.coverUrl
         };
 
-        await interceptionAxios.post(`api/v1/cinema/movieprojections`, addedProjection, config).then((res: any) => {
-          const swalText = `<div style='color:whitesmoke'>You have successfully added projection!</div>`;
+        await interceptionAxios.put(`api/v1/cinema/movies/${location.state.movieId}`, editedMovie, config).then((res: any) => {
+          const swalText = `<div style='color:whitesmoke'>You have successfully edited movie!</div>`;
           Swal.fire({
               title: `<div style='color:whitesmoke'>Success!</div>`,
               html: swalText,
@@ -108,7 +100,7 @@ const AddMovieProjection = () => {
         }
       });
     }
-    navigate('/projections/table');
+    navigate('/movies/table');
 
     return () => {
         //
@@ -118,45 +110,64 @@ const AddMovieProjection = () => {
   const onChangeHandler = (e: any) => {
       console.log(e.target.value, e.target.name);
       e.preventDefault();
-      setNewProjection({ ...newProjection, [e.target.name]: e.target.value });
+      setNewMovie({ ...newMovie, [e.target.name]: e.target.value });
   };
 
   useEffect(() => {
-    getMovies();
+    
   });
 
   return (
       <div>
           <div className="add-equipment-container" style={{ marginTop: '5%' }}>
               <div className="add-equipment-form">
-                  <p className="signup-title">Add new movie projection</p>
-                  <p className="signup-text">Enter projection's information</p>
-                  <FormControl className="select-form">
-                      <InputLabel id="label">Select movie</InputLabel>
-                      <Select
-                          id="outlined-basic"
-                          label="Movie"
-                          variant="outlined"
-                          name="movie_id"
-                          value={newProjection.movie_id}
-                          onChange={onChangeHandler}
-                      >
-                        {movies.map((movie: any) => (
-                          <MenuItem value={movie.id.toString()}>
-                            {movie.title}
-                          </MenuItem>
-                        ))}
-                      </Select>
-                  </FormControl>
+                  <p className="signup-title">Edit movie</p>
+                  <p className="signup-text">Edit movie's information</p>
+                  <TextField
+                        className="input-field"
+                        id="outlined-basic"
+                        label="Title"
+                        variant="outlined"
+                        name="title"
+                        value={newMovie.title}
+                        onChange={onChangeHandler}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start"></InputAdornment>,
+                        }}
+                    />
+                    <TextField
+                        className="input-field"
+                        id="outlined-basic"
+                        label="Description"
+                        variant="outlined"
+                        name="description"
+                        value={newMovie.description}
+                        onChange={onChangeHandler}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start"></InputAdornment>,
+                        }}
+                    />
+                    <TextField
+                        className="input-field"
+                        id="outlined-basic"
+                        label="Genre"
+                        variant="outlined"
+                        name="genre"
+                        value={newMovie.genre}
+                        onChange={onChangeHandler}
+                        InputProps={{
+                            startAdornment: <InputAdornment position="start"></InputAdornment>,
+                        }}
+                    />
                     <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DateTimePicker
+                        <DatePicker
                             className="picker"
-                            label="Projection date"
+                            label="Release date"
                             value={value}
-                            disablePast
+                            disableFuture
                             onChange={(newValue: any) => {
                                 setValue(newValue);
-                                setProjectionDate(newValue)
+                                setReleaseDate(newValue)
                             }}
                             renderInput={(params: any) => <TextField {...params} />}
                         />
@@ -164,19 +175,17 @@ const AddMovieProjection = () => {
                     <TextField
                         className="input-field"
                         id="outlined-basic"
-                        label="Number of seats"
+                        label="Cover image url"
                         variant="outlined"
-                        name="total_seats"
-                        type="number"
-                        value={newProjection.total_seats}
+                        name="coverUrl"
+                        value={newMovie.coverUrl}
                         onChange={onChangeHandler}
                         InputProps={{
                             startAdornment: <InputAdornment position="start"></InputAdornment>,
-                            inputProps: { min: 0, max: 50 },
                         }}
                     />
-                  <Button className="equipment-button" variant="contained" onClick={addProjection}>
-                      Add
+                  <Button className="equipment-button" variant="contained" onClick={editMovie}>
+                      Save
                   </Button>
               </div>
               <div className="equipment-background">
@@ -187,4 +196,4 @@ const AddMovieProjection = () => {
   );
 }
 
-export default AddMovieProjection;
+export default EditMovieTable;
