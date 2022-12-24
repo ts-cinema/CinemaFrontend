@@ -22,7 +22,7 @@ const Navbar = () => {
     const logoutUser = (e: any) => {
         e.preventDefault();
         logout().catch((err) => console.log(err));
-        navigate('/home');
+        navigate('/movies');
     };
 
     return (

@@ -19,7 +19,7 @@ const MovieItem = (props: any) => {
 
     const accessToken = cookieService.getCookie()?.token;
     if (accessToken == null) {
-      const swalText = `<div style='color:whitesmoke'>You should log in in order to rate movies!</div>`;
+      const swalText = `<div style='color:whitesmoke'>You don't have permissions to perform this action!</div>`;
         Swal.fire({
             title: `<div style='color:whitesmoke'>An error occured!</div>`,
             html: swalText,
@@ -55,20 +55,7 @@ const MovieItem = (props: any) => {
               background: "#2C2C2C",
           });
       }).catch((error: any) => {
-        if (error?.response?.code !== 201 && error?.response?.code !== 403) {
-          const swalText = `<div style='color:whitesmoke'>You should log in in order to rate movies!</div>`;
-          Swal.fire({
-              title: `<div style='color:whitesmoke'>An error occured!</div>`,
-              html: swalText,
-              icon: "error",
-              backdrop: true,
-              showConfirmButton: true,
-              confirmButtonColor: "#eb0028",
-              focusConfirm: false,
-              background: "#2C2C2C",
-          });
-        }
-        if (error?.response?.code === 403) {
+        if (error?.response?.code !== 201) {
           const swalText = `<div style='color:whitesmoke'>You don't have permissions to perform this action!</div>`;
           Swal.fire({
               title: `<div style='color:whitesmoke'>An error occured!</div>`,

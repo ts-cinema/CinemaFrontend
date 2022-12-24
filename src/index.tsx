@@ -18,6 +18,11 @@ import Reservation from './components/reservation/Reservation';
 import MovieItem from './components/movie/MovieItem';
 import MovieList from './components/movie/MovieList';
 import MoviesData from './components/movie/MoviesData';
+import MoviesTable from './components/admin/movies/MoviesTable';
+import AddMovieTable from './components/admin/movies/AddMovieTable';
+import UsersTable from './components/admin/users/UsersTable';
+import ProjectionsTable from './components/admin/projections/ProjectionsTable';
+import AddMovieProjection from './components/admin/projections/AddMovieProjection';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -35,9 +40,13 @@ root.render(
                         <Route path={'/login'} element={ <Login />} />
                         <Route path={'/register'} element={ <Register />} />
                         <Route path={'/reservation'} element={ <Reservation />} />
-                        <Route path={'/movie/create'} element={ <CreateMovie />} />
+                        <Route path={'/movie/add'} element={ <AddMovieTable />} />
+                        <Route path={'/projection/add'} element={ <AddMovieProjection />} />
                         <Route path={'/movie/edit'} element={ <EditMovie />} />
                         <Route path={'/movies'} element={ <MoviesData />} />
+                        <Route path={'/movies/table'} element={ <MoviesTable />} />
+                        <Route path={'/users/table'} element={ <UsersTable />} />
+                        <Route path={'/projections/table'} element={ <ProjectionsTable />} />
                         <Route path={'/profile'} element={ <Profile />} />
                         <Route path={'/profile/edit'} element={ <EditProfile />} />
                       </Route>
