@@ -81,8 +81,6 @@ const EditMovieProjection = () => {
             movie_id: location.state.movieId
         };
 
-        console.log("Id " + location.state.projectionId);
-
         await interceptionAxios.put(`api/v1/cinema/movieprojections/${location.state.projectionId}`, modifiedProjection, config).then((res: any) => {
           const swalText = `<div style='color:whitesmoke'>You have successfully edited projection!</div>`;
           Swal.fire({
@@ -119,7 +117,6 @@ const EditMovieProjection = () => {
   };
 
   const onChangeHandler = (e: any) => {
-      console.log(e.target.value, e.target.name);
       e.preventDefault();
       setNewProjection({ ...newProjection, [e.target.name]: e.target.value });
   };

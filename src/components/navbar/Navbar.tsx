@@ -55,7 +55,7 @@ const Navbar = () => {
                         </button>
                     )}
 
-                    {cookieService.getCookie() != null && cookieService.getCookie().token && (
+                    {cookieService.getCookie() != null && cookieService.getCookie().token && cookieService.isRegisteredUser(cookieService.getCookie().token) && (
                         <Link to="/profile">
                         <IconButton ><PersonIcon /></IconButton>
                     </Link>

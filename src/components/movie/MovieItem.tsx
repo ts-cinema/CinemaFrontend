@@ -113,7 +113,7 @@ const MovieItem = (props: any) => {
               size="large"
               precision={0.5}
               onChange={onStarClickHandler}
-              style={{ color: "#eb0028" }}
+              style={{ color: "#004fa3" }}
             />
             <div className={classes.numberRating}>
               <b>{props.movie.rating.toFixed(1)}</b> /5

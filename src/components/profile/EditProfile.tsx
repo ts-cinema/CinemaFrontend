@@ -2,6 +2,10 @@ import * as React from 'react';
 import Box from '@mui/material/Box';
 import TextField from '@mui/material/TextField';
 import { Button, FormControl, InputAdornment, InputLabel,OutlinedInput } from '@mui/material';
+import { useNavigate } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import interceptionAxios from '../../api/InterceptionAxios';
+import { cookieService } from '../../CookieService';
 import IconButton from '@mui/material/IconButton';
 import Visibility from '@mui/icons-material/Visibility';
 import VisibilityOff from '@mui/icons-material/VisibilityOff';
@@ -9,52 +13,85 @@ import VisibilityOff from '@mui/icons-material/VisibilityOff';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import './Profile.css'
+import { RiLockPasswordLine } from 'react-icons/ri';
+import Swal from 'sweetalert2';
+import { HiOutlineMail } from 'react-icons/hi';
+import { useState } from 'react';
 
 const EditProfile = () => {
 
-    const [showPassword, setShowPassword] = React.useState(false);
+    const navigate = useNavigate();
+    const location = useLocation();
 
-    const handleClickShowPassword = () => setShowPassword((show) => !show);
-  
-    const handleMouseDownPassword = (event: React.MouseEvent<HTMLButtonElement>) => {
-      event.preventDefault();
+    const initialUserState = {
+        email: location.state.email,
+        current_password: '',
+        new_password: ''
     };
 
-    let profile = {
-        username: '',
-        password: '',
-        email: ''
+    const [newUser, setNewUser] = useState(initialUserState);
+    const [error, setError] = useState(false);
+
+    const onChangeHandler = (e: any) => {
+        e.preventDefault();
+        setNewUser({ ...newUser, [e.target.name]: e.target.value });
     };
 
-    function getUsername(val: any) {
-        profile.username = val.target.value
-    }
-
-    function getPassword(val: any) {
-        // za password sakriti sifru i slati mail za confirm????
-        profile.password = val.target.value
-    }
-
-    function getEmail(val: any) {
-        // submit email linkom? :(
-        profile.email = val.target.value
-    }
-
-    const sendPutRequest = async() => {
-      /*  await getMovieRequest();
-        let id = localStorage.getItem('movie')
-        await axios.put('http://localhost:8080/donation/update/' + id, donation ).then(function (response) {
-            if(response.status == 200){
-                toast.info("Updating...", {
-                    position: toast.POSITION.BOTTOM_CENTER
-                  });
-            } 
-        }).catch(function (error) {
-            toast.error("Wrong info!", {
-                position: toast.POSITION.BOTTOM_CENTER
+    const editProfile = async() => {
+        const accessToken = cookieService.getCookie()?.token;
+        if (accessToken == null) {
+          const swalText = `<div style='color:whitesmoke'>You don't have permissions to perform this action!</div>`;
+            Swal.fire({
+                title: `<div style='color:whitesmoke'>An error occured!</div>`,
+                html: swalText,
+                icon: "error",
+                backdrop: true,
+                showConfirmButton: true,
+                confirmButtonColor: "#eb0028",
+                focusConfirm: false,
+                background: "#2C2C2C",
+            });
+        }
+        else {          
+            const config = {
+              headers: { "Authorization": `Bearer ${accessToken}` }
+            };
+    
+            const changedInfo = {
+                email: newUser.email,
+                current_password: newUser.current_password,
+                new_password: newUser.new_password
+            };
+    
+            await interceptionAxios.post(`api/v1/cinema/users/change-info`, changedInfo, config).then((res: any) => {
+                const swalText = `<div style='color:whitesmoke'>You have successfully edited your profile!</div>`;
+                Swal.fire({
+                    title: `<div style='color:whitesmoke'>Success!</div>`,
+                    html: swalText,
+                    icon: "success",
+                    backdrop: true,
+                    showConfirmButton: true,
+                    confirmButtonColor: "#eb0028",
+                    focusConfirm: false,
+                    background: "#2C2C2C",
+                });
+          }).catch((error: any) => {
+            if (error?.response?.code !== 201) {
+              const swalText = `<div style='color:whitesmoke'>You are unable to perform this action!</div>`;
+              Swal.fire({
+                  title: `<div style='color:whitesmoke'>An error occured!</div>`,
+                  html: swalText,
+                  icon: "error",
+                  backdrop: true,
+                  showConfirmButton: true,
+                  confirmButtonColor: "#eb0028",
+                  focusConfirm: false,
+                  background: "#2C2C2C",
               });
-        
-          });*/
+            }
+          });
+        }
+        navigate('/profile');
     }
 
  
@@ -63,39 +100,58 @@ const EditProfile = () => {
           <div>
               <h1>Edit Profile Information</h1>
   
-              <Box component="form" sx={{'& .MuiTextField-root': { m: 1, width: '25ch' },}}>
-                  <div className="formInputs">
-                      <TextField label = "Username" multiline onChange={getUsername}/>
-                  </div>
-                  <div className="formInputs">
-                      <TextField label="E-mail" multiline onChange={getEmail}/>
-                  </div>
-                  <div className="formInputs">
-                    <FormControl sx={{ m: 1, width: '25ch' }} variant="outlined">
-                        <InputLabel htmlFor="outlined-adornment-password" onChange={getPassword}>Password</InputLabel>
-                        <OutlinedInput
-                            id="outlined-adornment-password"
-                            type={showPassword ? 'text' : 'password'}
-                            endAdornment={
-                            <InputAdornment position="end">
-                                <IconButton
-                                aria-label="toggle password visibility"
-                                onClick={handleClickShowPassword}
-                                onMouseDown={handleMouseDownPassword}
-                                edge="end"
-                                >
-                                {showPassword ? <VisibilityOff /> : <Visibility />}
-                                </IconButton>
-                            </InputAdornment>
-                            }
-                            label="Password"
-                        />
-                    </FormControl>
-                  </div>
-              </Box>
+              <TextField
+                        className="input-field"
+                        id="outlined-basic"
+                        label="Email"
+                        variant="outlined"
+                        name="email"
+                        value={newUser.email}
+                        onChange={onChangeHandler}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <HiOutlineMail />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+                    <TextField
+                        className="input-field"
+                        id="outlined-password-input"
+                        label="Current password"
+                        type="password"
+                        name="current_password"
+                        value={newUser.current_password}
+                        onChange={onChangeHandler}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <RiLockPasswordLine />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
+
+                    <TextField
+                        className="input-field"
+                        id="outlined-password-input"
+                        label="New password"
+                        type="password"
+                        name="new_password"
+                        value={newUser.new_password}
+                        onChange={onChangeHandler}
+                        InputProps={{
+                            startAdornment: (
+                                <InputAdornment position="start">
+                                    <RiLockPasswordLine />
+                                </InputAdornment>
+                            ),
+                        }}
+                    />
   
               <div className="buttonSubmit">
-                  <Button variant="contained" color="primary" onClick={sendPutRequest}>Save</Button>
+                  <Button variant="contained" color="primary" onClick={editProfile}>Save</Button>
                   <ToastContainer/>
               </div>
   

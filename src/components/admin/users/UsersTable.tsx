@@ -22,7 +22,7 @@ const UsersTable = () => {
 
     function filterAdmin(user: any) {
         return user.email !== "admin@cinema.com";
-      }
+    }
 
     const getUsers = async () => {
         const accessToken = cookieService.getCookie()?.token;
