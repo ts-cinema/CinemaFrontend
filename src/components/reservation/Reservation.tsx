@@ -112,7 +112,6 @@ const Reservation = () => {
   };
 
   const onChangeHandler = (e: any) => {
-      console.log(e.target.value, e.target.name);
       e.preventDefault();
       setNewTicket({ ...newTicket, [e.target.name]: e.target.value });
   };

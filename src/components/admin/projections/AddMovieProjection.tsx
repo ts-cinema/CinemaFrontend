@@ -116,7 +116,6 @@ const AddMovieProjection = () => {
   };
 
   const onChangeHandler = (e: any) => {
-      console.log(e.target.value, e.target.name);
       e.preventDefault();
       setNewProjection({ ...newProjection, [e.target.name]: e.target.value });
   };
