@@ -159,19 +159,6 @@ const EditMovieTable = () => {
                             startAdornment: <InputAdornment position="start"></InputAdornment>,
                         }}
                     />
-                    <LocalizationProvider dateAdapter={AdapterDayjs}>
-                        <DatePicker
-                            className="picker"
-                            label="Release date"
-                            value={value}
-                            disableFuture
-                            onChange={(newValue: any) => {
-                                setValue(newValue);
-                                setReleaseDate(newValue)
-                            }}
-                            renderInput={(params: any) => <TextField {...params} />}
-                        />
-                    </LocalizationProvider>
                     <TextField
                         className="input-field"
                         id="outlined-basic"
