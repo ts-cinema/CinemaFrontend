@@ -1,4 +1,5 @@
 import { Outlet } from "react-router-dom";
+import MoviesData from "../movie/MoviesData";
 import Navbar from '../navbar/Navbar';
 
 const Layout = () => {

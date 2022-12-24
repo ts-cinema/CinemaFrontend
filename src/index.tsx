@@ -33,13 +33,11 @@ root.render(
                     <Routes>
                       <Route path="/" element={<Layout />}>
                         <Route path={'/login'} element={ <Login />} />
-                        <Route path={'/home'} element={ <Homepage />} />
                         <Route path={'/register'} element={ <Register />} />
                         <Route path={'/reservation'} element={ <Reservation />} />
                         <Route path={'/movie/create'} element={ <CreateMovie />} />
                         <Route path={'/movie/edit'} element={ <EditMovie />} />
-                        <Route path={'/movies'} element={ <Movies />} />
-                        <Route path={'/movies2'} element={ <MoviesData />} />
+                        <Route path={'/movies'} element={ <MoviesData />} />
                         <Route path={'/profile'} element={ <Profile />} />
                         <Route path={'/profile/edit'} element={ <EditProfile />} />
                       </Route>

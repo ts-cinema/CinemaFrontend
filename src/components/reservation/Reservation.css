@@ -1,0 +1,89 @@
+.equipment-table {
+    width: 60% !important;
+    margin: auto;
+    margin-top: 3%;
+    margin-bottom: 3%;
+    border: 1px;
+    border-style: solid;
+    border-color: rgba(126, 124, 124, 0.062);
+    box-shadow: 0px 10px 15px -3px rgba(0, 0, 0, 0.1);
+}
+
+.equipment-type-text {
+    padding: 5% 5% 5% 5%;
+    text-align: center;
+    border-radius: 20px;
+}
+
+.Consumables {
+    background-color: #fa6be058;
+    color: #860d8ac2;
+    border: none;
+}
+
+.Medicine {
+    background-color: rgba(158, 200, 235, 0.595);
+    color: #195396;
+    border: none;
+}
+
+.equipment-title {
+    text-align: center;
+}
+
+.add-equipment-btn {
+    margin-left: 20% !important;
+}
+
+.make-order-btn {
+    float: right;
+    margin-right: 20% !important;
+}
+
+.equipment-background {
+    width: 60%;
+    margin-top: 4rem;
+}
+
+.add-equipment-form {
+    display: flex;
+    flex-direction: column;
+    width: 40%;
+    margin-top: 2%;
+    zoom: 90%
+}
+
+.add-equipment-container {
+    display: flex;
+    flex-direction: row;
+    position: fixed;
+    bottom: 0;
+    right: 0;
+    left: 0;
+    top: 4rem;
+}
+
+.equipment-background {
+    width: 60%;
+    margin-top: 0% !important;
+    max-width: 60%;
+    max-height: 40vh;
+}
+
+.equipment-button {
+    width: 20%;
+    margin-top: 20px !important;
+    margin-left: 25% !important;
+}
+
+.input-field {
+    width: 50%;
+    margin-bottom: 20px !important;
+    margin-left: 25% !important;
+}
+
+.select-form{
+    width: 50%;
+    margin-bottom: 20px !important;
+    margin-left: 25% !important;
+}

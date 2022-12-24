@@ -6,12 +6,14 @@ import interceptionAxios from "../../api/InterceptionAxios";
 import { Rating } from "@material-ui/lab";
 import {cookieService} from "../../CookieService"
 import jwt_decode from 'jwt-decode';
+import { useNavigate } from 'react-router-dom';
 import { access } from "fs";
 // import { updateContentRating } from "../../store/movie-actions";
 // import "./SwalStyle.css";
 
 const MovieItem = (props: any) => {
   const dispatch = useDispatch();
+  const navigate = useNavigate();
 
   const updateRating = async (rating: any) => {
 
@@ -53,8 +55,21 @@ const MovieItem = (props: any) => {
               background: "#2C2C2C",
           });
       }).catch((error: any) => {
-        if (error?.response?.code !== 201) {
+        if (error?.response?.code !== 201 && error?.response?.code !== 403) {
           const swalText = `<div style='color:whitesmoke'>You should log in in order to rate movies!</div>`;
+          Swal.fire({
+              title: `<div style='color:whitesmoke'>An error occured!</div>`,
+              html: swalText,
+              icon: "error",
+              backdrop: true,
+              showConfirmButton: true,
+              confirmButtonColor: "#eb0028",
+              focusConfirm: false,
+              background: "#2C2C2C",
+          });
+        }
+        if (error?.response?.code === 403) {
+          const swalText = `<div style='color:whitesmoke'>You don't have permissions to perform this action!</div>`;
           Swal.fire({
               title: `<div style='color:whitesmoke'>An error occured!</div>`,
               html: swalText,
@@ -129,6 +144,12 @@ const MovieItem = (props: any) => {
             <b>Genre:</b>{" "}
             {props.movie.genre}
           </p>
+          <button 
+            className={classes.reserveBtn}
+            onClick={() => {
+              navigate('/reservation', { state: { movieId: props.movie.id, movieName: props.movie.title } });
+            }}
+          >Reserve tickets</button>
         </span>
       </div>
     </Fragment>

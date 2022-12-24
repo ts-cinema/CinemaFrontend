@@ -71,7 +71,7 @@ const MoviesData = (props: any) => {
     return () => {
         //
     };
-};
+  };
 
   useEffect(() => {
     getMovies();
