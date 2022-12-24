@@ -1,7 +1,6 @@
 import { faSpinner } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { useDispatch, useSelector } from "react-redux";
-import { movieActions } from "../../helpers/movie-slice";
 import Card from "./Card";
 import MovieItem from "./MovieItem";
 import classes from "./MovieList.module.css";

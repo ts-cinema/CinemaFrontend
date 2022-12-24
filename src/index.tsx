@@ -25,6 +25,9 @@ import ProjectionsTable from './components/admin/projections/ProjectionsTable';
 import AddMovieProjection from './components/admin/projections/AddMovieProjection';
 import EditMovieProjection from './components/admin/projections/EditMovieProjection';
 import EditMovieTable from './components/admin/movies/EditMovieTable';
+import NotFound from './components/error_pages/not_found/NotFound';
+import RequireAuth from './components/require_auth/RequireAuth';
+import Unauthorized from './components/error_pages/unauthorized/Unauthorized';
 
 const container = document.getElementById('root')!;
 const root = createRoot(container);
@@ -39,19 +42,33 @@ root.render(
                     <ToastContainer />
                     <Routes>
                       <Route path="/" element={<Layout />}>
+                        {/*Public routes*/}
                         <Route path={'/login'} element={ <Login />} />
                         <Route path={'/register'} element={ <Register />} />
-                        <Route path={'/reservation'} element={ <Reservation />} />
-                        <Route path={'/movie/add'} element={ <AddMovieTable />} />
-                        <Route path={'/projection/add'} element={ <AddMovieProjection />} />
                         <Route path={'/movies'} element={ <MoviesData />} />
-                        <Route path={'/movies/table'} element={ <MoviesTable />} />
-                        <Route path={'/movie/edit'} element={ <EditMovieTable />} />
-                        <Route path={'/users/table'} element={ <UsersTable />} />
-                        <Route path={'/projections/table'} element={ <ProjectionsTable />} />
-                        <Route path={'/projection/edit'} element={ <EditMovieProjection />} />
-                        <Route path={'/profile'} element={ <Profile />} />
-                        <Route path={'/profile/edit'} element={ <EditProfile />} />
+                        <Route path={'/reservation'} element={ <Reservation />} />
+                        <Route path={'/unauthorized'} element={<Unauthorized />} />
+
+                        {/*Protected routes*/}
+                        <Route element={<RequireAuth allowedRoles={['registered_user', 'administrator']} />}>
+
+                        </Route>
+                        <Route element={<RequireAuth allowedRoles={['registered_user']} />}>
+                          <Route path={'/profile'} element={ <Profile />} />
+                          <Route path={'/profile/edit'} element={ <EditProfile />} />
+                        </Route>
+                        <Route element={<RequireAuth allowedRoles={['administrator']} />}>
+                          <Route path={'/movie/add'} element={ <AddMovieTable />} />
+                          <Route path={'/movie/edit'} element={ <EditMovieTable />} />
+                          <Route path={'/movies/table'} element={ <MoviesTable />} />
+                          <Route path={'/users/table'} element={ <UsersTable />} />
+                          <Route path={'/projections/table'} element={ <ProjectionsTable />} />
+                          <Route path={'/projection/edit'} element={ <EditMovieProjection />} />
+                          <Route path={'/projection/add'} element={ <AddMovieProjection />} />
+                        </Route>
+
+                        {/*Catch all*/}
+                        <Route path="*" element={<NotFound />} />
                       </Route>
                     </Routes>
             </React.Suspense>
